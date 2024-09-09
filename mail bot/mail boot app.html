@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+
+    <title>mail boot</title>
+
+<script src="./node_modules/@emailjs/browser/dist/email.min.js"></script>
+<script src="./node_modules/@emailjs/browser/cjs/api/sendPost.js"></script>
+<!--  -->
+</head>
+<body>
+ <div class="container-fluid  vh-100 d-flex justify-content-center align-items-center  ">
+  
+<div class="flex-colum w-50 ">
+    <p class="text-bg-dark text-white">Add emails on this way example1@gmail.com example2@gmail.com example3@gmail.com <br>
+        <ol>
+<li>       make sure that you put one space bettwen each email (just one space )</li>
+<li>      press add email button when you added mails</li>
+<li>      press send when you finish adding</li>
+
+
+        </ol>
+        
+ 
+    
+    </p>
+
+   <h2 class="  w-50 " >HI I'm mailboot <br> Lets get start</h2>
+
+
+ 
+    <div class="row my-2">
+        <label >each input takes 5mails max</label>
+        <input id="btnn1" class="w-100 form-control my-2 " placeholder="Emails" type="email">
+        <!-- <input id="btnn2" class="w-100 form-control my-2 " placeholder="Emails" type="email">
+        <input id="btnn3" class="w-100 form-control my-2 " placeholder="Emails" type="email"> -->
+<button id="addEmailsReciver" class="w-25 btn-primary form-control my-2">add Emails </button>
+
+<p id="addEmailsMsg" class="d-none text-success">Emails have been added successfully</p>
+    </div>
+<!-- <div class="row">
+    <input id="btnn2" class="w-100 form-control m-2" placeholder="Names" type="text">
+<button id="addNameReciver" class="w-25 btn-primary form-control">add Names </button>
+<p id="addNamessMsg" class="d-none text-success">Names have been added successfully</p>
+</div> -->
+
+
+<div class="row">
+<button  id="sendButton" class="btn disabled w-100 btn-primary">send</button>
+<p id="errorP" class="text-danger d-none">*something went wrong maybe you are lost your connection*</p>
+</div>
+
+
+</div>
+
+
+
+    </div>
+
+    
+
+<script >
+
+
+let addEmailsReciver=document.getElementById("addEmailsReciver");
+let addEmailsMsg=document.getElementById("addEmailsMsg");
+let sendButton=document.getElementById("sendButton");
+let errorP=document.getElementById("errorP")
+let Finalreciver;
+// let Finalreciver1;
+// let Finalreciver2;
+let counter=1;
+addEmailsReciver.addEventListener("click",()=>{
+    let reciver= document.getElementById("btnn1").value;
+    // let reciver1= document.getElementById("btnn2").value;
+    // let reciver2= document.getElementById("btnn3").value;
+    if(reciver=== undefined || reciver=== null || reciver=== ""){
+        sendButton.classList.add("disabled")
+        // && reciver1=== undefined || reciver1=== null || reciver1=== ""&&reciver2=== undefined || reciver2=== null || reciver2=== ""
+    }
+    else{
+       
+        addEmailsMsg.classList.toggle("d-none")
+       console.log(reciver);
+    //    console.log(reciver1);
+    //    console.log(reciver2);
+    console.log(reciver.split(" "));
+    sendButton.classList.remove("disabled")   ;
+    errorP.classList.add("d-none")
+     Finalreciver= reciver.split(" ");
+    //  Finalreciver1= reciver1.split(" ");
+    //  Finalreciver2= reciver2.split(" ");
+    console.log(Finalreciver);
+    // console.log(Finalreciver1);
+    // console.log(Finalreciver2);
+    }
+
+})
+
+
+//--------------------------- when we want to add name ---------------------------------
+
+// let addNameReciver=document.getElementById("addNameReciver")
+// let addNamessMsg=document.getElementById("addNamessMsg")
+// let finalReciverNames;
+// let whatWillDealWith={reciverFinalEmail:[],reciverFinalName:[]}
+// addNameReciver.addEventListener("click",()=>{
+//     let reciverNames= document.getElementById("btnn2").value;
+
+
+ 
+       
+//         addNamessMsg.classList.toggle("d-none")
+//     console.log(reciverNames);
+//     console.log(reciverNames.split(" "));
+//     finalReciverNames= reciverNames.split(" ");
+
+//     Finalreciver.forEach((item,index) => {
+//         whatWillDealWith.reciverFinalEmail.push(item);
+//         whatWillDealWith.reciverFinalName.push(finalReciverNames[index]);
+//     // console.log(item+''+finalReciverNames[index]);
+//     });
+// console.log(whatWillDealWith);
+   
+// })
+//--------------------------- when we want to add name ---------------------------------
+
+let params={}
+sendButton.addEventListener("click" , ()=>{
+    for (let i = 0; i < Finalreciver.length; i++) {
+        
+        
+       params={
+    custmerEmail:Finalreciver[i],
+    reply_to: 'agencyagency990@gmail.com'
+}
+  sendMail(params);
+  counter ++ ;
+
+    }
+    // secondSend();
+
+})
+function secondSend(){
+    for (let i = 0; i < Finalreciver1.length; i++) {
+       params={
+    custmerEmail:Finalreciver1[i],
+    reply_to: 'agencyagency990@gmail.com'
+}
+  sendMail(params);
+  counter ++ ;
+
+    }
+    thirdSend();
+}
+
+function thirdSend(){
+    for (let i = 0; i < Finalreciver2.length; i++) {
+       params={
+    custmerEmail:Finalreciver2[i],
+    reply_to: 'agencyagency990@gmail.com'
+}
+
+  sendMail(params);
+counter++;
+
+    }
+
+
+}
+
+
+
+function sendMail(params){
+    (function(){
+  emailjs.init("GsJkWvl9pfSx4shv7");
+})();
+
+
+const serviceID="service_h5ibvte";
+const templateID="template_24rmc5c";
+
+
+
+emailjs.send(serviceID,templateID,params).then(()=>{alert("seccess"+ " "+counter)}).catch((err)=>{ errorP.classList.remove("d-none")
+ })
+
+
+sendButton.classList.add("disabled")
+errorP.classList.add("d-none")
+
+
+}
+
+
+</script>
+
+
+
+</body>
+</html>
